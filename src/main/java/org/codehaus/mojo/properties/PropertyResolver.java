@@ -40,9 +40,15 @@ class PropertyResolver {
      * @return resolved property value
      * @throws IllegalArgumentException when properties are circularly defined
      */
-    public String getPropertyValue( String key, Properties properties, Properties environment )
+    public String getPropertyValue( String key, Properties properties, Properties environment ) {
+        return getPropertyValue(key, properties, environment, true);
+    }
+
+    public String getPropertyValue( String key, Properties properties, Properties environment, boolean expand )
     {
         String value = properties.getProperty(key);
+
+        if (!expand) return value;
 
         ExpansionBuffer buffer = new ExpansionBuffer(value);
 
